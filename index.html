@@ -4,190 +4,553 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#073776">
-
-  <title>Cadastro de Fornecedores</title>
-
+  <title>Cadastro de Fornecedores | Portal de Parcerias</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --azul: #1675f2;
+      --fundo: #080e1b;
+      --card: #111d31;
+      --borda: #293952;
+      --texto: #f4f7ff;
+      --cinza: #a7b5ca;
     }
+
+    * { box-sizing: border-box; }
 
     body {
+      margin: 0;
+      background: var(--fundo);
+      color: var(--texto);
       font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-
-      background:
-        radial-gradient(
-          circle at 15% 20%,
-          #4385c9 0,
-          transparent 40%
-        ),
-        linear-gradient(
-          135deg,
-          #061d42,
-          #07509a 55%,
-          #e5edf7
-        );
-
-      color: #18365f;
+      line-height: 1.6;
     }
 
-    .container {
-      width: 100%;
-      max-width: 470px;
-      text-align: center;
+    header {
+      border-bottom: 1px solid var(--borda);
+      padding: 20px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
     }
 
     .logo {
-      color: white;
-      font-size: clamp(27px, 6vw, 39px);
+      font-size: 19px;
       font-weight: 800;
-      font-style: italic;
-      letter-spacing: -1.5px;
-      margin-bottom: 28px;
-      text-shadow: 0 3px 12px #001a3c66;
+      letter-spacing: .4px;
     }
 
-    .logo span {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 5px;
-      margin-top: 7px;
-      font-style: normal;
+    .logo span { color: var(--azul); }
+
+    .tag {
+      color: var(--cinza);
+      font-size: 12px;
+      text-align: right;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 10px;
-      padding: 36px 28px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    .hero {
+      padding: 80px 7% 60px;
+      text-align: center;
+      background: radial-gradient(
+        ellipse at top,
+        #17355f 0%,
+        #080e1b 68%
+      );
     }
 
-    .icon {
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 20px;
-      background: #e7effb;
-      color: #073776;
-      border-radius: 18px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 38px;
+    .pill {
+      display: inline-block;
+      border: 1px solid #3569a7;
+      background: #102745;
+      color: #91c2ff;
+      border-radius: 50px;
+      padding: 7px 17px;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
 
     h1 {
-      font-size: 25px;
-      margin-bottom: 14px;
-      color: #173d76;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.12;
+      max-width: 800px;
+      margin: 24px auto;
     }
 
-    .description {
-      font-size: 15px;
-      line-height: 1.7;
-      color: #59677b;
-      margin-bottom: 27px;
+    h1 span { color: #4194ff; }
+
+    .hero p {
+      max-width: 640px;
+      margin: auto;
+      color: var(--cinza);
+      font-size: 16px;
     }
 
-    .download-button {
-      display: block;
-      width: 100%;
-      padding: 17px 12px;
-      border-radius: 6px;
-      background: #073776;
+    .btn {
+      display: inline-block;
+      background: var(--azul);
       color: white;
-
+      padding: 15px 30px;
+      border-radius: 9px;
       font-size: 15px;
       font-weight: bold;
       text-decoration: none;
-      letter-spacing: 1px;
-
-      transition: background 0.2s, transform 0.2s;
+      border: none;
+      cursor: pointer;
+      transition: .2s;
     }
 
-    .download-button:hover {
-      background: #0c529e;
-      transform: translateY(-2px);
+    .btn:hover { background: #348cff; }
+    .btn:disabled { opacity: .6; cursor: wait; }
+
+    .hero .btn { margin-top: 30px; }
+
+    .container {
+      max-width: 1060px;
+      padding: 60px 20px;
+      margin: auto;
     }
 
-    .note {
-      margin-top: 18px;
+    .section-title {
+      text-align: center;
+      font-size: 29px;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: var(--cinza);
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card, .form-box {
+      background: var(--card);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 25px;
+    }
+
+    .card .number {
+      color: #61a6ff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .card h3 { margin-bottom: 8px; }
+    .card p { color: var(--cinza); font-size: 14px; }
+
+    .form-box {
+      max-width: 850px;
+      margin: auto;
+      padding: 35px;
+    }
+
+    .form-box h2 { margin-top: 0; }
+
+    .form-intro {
+      color: var(--cinza);
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: #091324;
+      border: 1px solid #34435b;
+      border-radius: 8px;
+      color: white;
+      padding: 13px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #4596ff;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #8291a8;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .required { color: #74b3ff; }
+
+    .privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--cinza);
       font-size: 12px;
-      line-height: 1.6;
-      color: #697589;
+      margin: 15px 0 25px;
     }
+
+    .privacy input {
+      width: auto;
+      margin-top: 4px;
+    }
+
+    .submit-btn { width: 100%; }
+
+    #status {
+      text-align: center;
+      margin-top: 15px;
+      color: #ffb3b3;
+    }
+
+    #sucesso {
+      display: none;
+      text-align: center;
+      padding: 55px 15px;
+    }
+
+    .check {
+      width: 75px;
+      height: 75px;
+      background: #0d493a;
+      color: #5ff2b2;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 40px;
+      margin: 0 auto 20px;
+    }
+
+    #sucesso p { color: var(--cinza); }
 
     footer {
-      margin-top: 25px;
-      color: white;
+      border-top: 1px solid var(--borda);
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--cinza);
       font-size: 12px;
-      line-height: 1.8;
     }
 
-    @media (max-width: 480px) {
-      .card {
-        padding: 30px 22px;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
+    @media (max-width: 700px) {
+      header { padding: 18px 5%; }
+      .tag { display: none; }
+      .hero { padding: 65px 20px; }
+      .cards, .grid { grid-template-columns: 1fr; }
+      .form-box { padding: 22px; }
+      .container { padding: 45px 16px; }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
+  <header>
+    <div class="logo">PORTAL <span>FORNECEDORES</span></div>
+    <div class="tag">CADASTRO CORPORATIVO DE PARCEIROS</div>
+  </header>
 
-    <header class="logo">
-      DIRECIONAL
-      <span>ENGENHARIA</span>
-    </header>
+  <section class="hero">
+    <div class="pill">OPORTUNIDADES DE PARCERIA</div>
 
-    <section class="card">
+    <h1>
+      Sua empresa pode fazer parte da
+      <span>nossa rede de fornecedores.</span>
+    </h1>
 
-      <div class="icon" aria-hidden="true">
-        ↓
+    <p>
+      Estamos ampliando nossa base de empresas parceiras
+      para o fornecimento de produtos e prestação de
+      serviços em diferentes áreas de atuação.
+    </p>
+
+    <a href="#cadastro" class="btn">
+      CADASTRAR MINHA EMPRESA
+    </a>
+  </section>
+
+  <section class="container">
+    <h2 class="section-title">Como funciona o cadastro?</h2>
+    <p class="subtitle">
+      Um processo simples para apresentar sua empresa.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="number">01</div>
+        <h3>Preencha os dados</h3>
+        <p>
+          Informe os dados comerciais e os contatos
+          da sua empresa.
+        </p>
       </div>
 
-      <h1>Cadastro de Fornecedores</h1>
+      <div class="card">
+        <div class="number">02</div>
+        <h3>Informe sua atuação</h3>
+        <p>
+          Selecione o segmento e descreva os produtos
+          ou serviços oferecidos.
+        </p>
+      </div>
 
-      <p class="description">
-        Deseja se tornar um fornecedor?
-        Baixe o aplicativo de cadastro para conhecer
-        as etapas e iniciar seu processo de inscrição.
-      </p>
+      <div class="card">
+        <div class="number">03</div>
+        <h3>Conclua o cadastro</h3>
+        <p>
+          Envie as informações para avaliação
+          de futuras oportunidades.
+        </p>
+      </div>
+    </div>
+  </section>
 
-      <a
-        class="download-button"
-        href="./direcional.apk"
-        download="direcional.apk"
-      >
-        BAIXAR APLICATIVO
-      </a>
+  <section class="container" id="cadastro">
+    <div class="form-box">
+      <div id="area-formulario">
+        <h2>Cadastro de Fornecedores</h2>
+        <p class="form-intro">
+          Preencha os campos abaixo para registrar
+          sua empresa em nossa base de fornecedores.
+        </p>
 
-      <p class="note">
-        Após baixar, abra o arquivo no seu dispositivo
-        Android e siga as instruções de instalação.
-      </p>
+        <form id="formulario">
+          <div class="grid">
+            <div class="field">
+              <label>Nome da empresa <span class="required">*</span></label>
+              <input name="empresa" required
+                placeholder="Razão social ou nome fantasia">
+            </div>
 
-    </section>
+            <div class="field">
+              <label>CNPJ / NIF</label>
+              <input name="documento"
+                placeholder="Documento da empresa">
+            </div>
 
-    <footer>
-      Direcional Engenharia<br>
-      Cadastro de fornecedores
-    </footer>
+            <div class="field">
+              <label>Nome do responsável <span class="required">*</span></label>
+              <input name="responsavel" required
+                placeholder="Nome completo">
+            </div>
 
-  </main>
+            <div class="field">
+              <label>Telefone de contato <span class="required">*</span></label>
+              <input name="telefone" type="tel" required
+                placeholder="DDD / código do país + número">
+            </div>
+
+            <div class="field">
+              <label>E-mail comercial <span class="required">*</span></label>
+              <input name="email" type="email" required
+                placeholder="empresa@exemplo.com">
+            </div>
+
+            <div class="field">
+              <label>País <span class="required">*</span></label>
+              <select name="pais" required>
+                <option value="">Selecione</option>
+                <option>Brasil</option>
+                <option>Angola</option>
+                <option>Portugal</option>
+                <option>Outro</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Cidade <span class="required">*</span></label>
+              <input name="cidade" required
+                placeholder="Cidade de atuação">
+            </div>
+
+            <div class="field">
+              <label>Estado / Província</label>
+              <input name="regiao"
+                placeholder="Estado ou província">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Tipo de empresa <span class="required">*</span></label>
+            <select name="tipo_empresa" id="tipo" required>
+              <option value="">Selecione o ramo de atuação</option>
+              <option>Construção civil e engenharia</option>
+              <option>Materiais de construção</option>
+              <option>Alimentação e refeições</option>
+              <option>Transporte e logística</option>
+              <option>Máquinas e equipamentos</option>
+              <option>Locação de equipamentos</option>
+              <option>Limpeza e conservação</option>
+              <option>Segurança e vigilância</option>
+              <option>Tecnologia e informática</option>
+              <option>Serviços elétricos</option>
+              <option>Serviços hidráulicos</option>
+              <option>Manutenção e reparos</option>
+              <option>Móveis e escritório</option>
+              <option>Uniformes e EPIs</option>
+              <option>Consultoria e serviços técnicos</option>
+              <option>Recursos humanos</option>
+              <option>Comércio e distribuição</option>
+              <option>Outros</option>
+            </select>
+          </div>
+
+          <div class="field" id="outro-campo" hidden>
+            <label>Informe o tipo de empresa</label>
+            <input id="outro-tipo" name="outro_tipo"
+              placeholder="Descreva o ramo da empresa">
+          </div>
+
+          <div class="field">
+            <label>Produtos ou serviços oferecidos <span class="required">*</span></label>
+            <textarea name="servicos" required
+              placeholder="Descreva detalhadamente o que sua empresa fornece ou quais serviços presta."></textarea>
+          </div>
+
+          <div class="field">
+            <label>Área de atendimento</label>
+            <input name="area_atendimento"
+              placeholder="Cidades, estados ou regiões atendidas">
+          </div>
+
+          <div class="field">
+            <label>Site ou rede social da empresa</label>
+            <input name="site"
+              placeholder="https://">
+          </div>
+
+          <label class="privacy">
+            <input type="checkbox" name="consentimento"
+              value="Sim" required>
+            <span>
+              Autorizo o tratamento dos dados informados
+              para análise do cadastro e contato sobre
+              oportunidades comerciais, conforme a
+              legislação de proteção de dados aplicável.
+            </span>
+          </label>
+
+          <button type="submit" class="btn submit-btn"
+            id="enviar">
+            FINALIZAR CADASTRO
+          </button>
+
+          <div id="status" role="alert"></div>
+        </form>
+      </div>
+
+      <div id="sucesso" role="status">
+        <div class="check">✓</div>
+        <h2>Cadastro concluído!</h2>
+        <p>
+          As informações da sua empresa foram recebidas
+          com sucesso.
+        </p>
+        <p>
+          Seu cadastro poderá ser considerado para
+          futuras oportunidades de fornecimento
+          e prestação de serviços.
+        </p>
+        <button class="btn" onclick="novoCadastro()">
+          REALIZAR OUTRO CADASTRO
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Portal de Fornecedores | Cadastro Corporativo<br>
+    O cadastro não garante contratação ou aprovação.
+  </footer>
+
+  <script>
+    // SUBSTITUA PELO SEU ENDPOINT DO FORMSPREE
+    const ENDPOINT = "https://formspree.io/f/SEU_ID_AQUI";
+
+    const formulario = document.getElementById("formulario");
+    const tipo = document.getElementById("tipo");
+    const outroCampo = document.getElementById("outro-campo");
+    const outroTipo = document.getElementById("outro-tipo");
+    const botao = document.getElementById("enviar");
+    const status = document.getElementById("status");
+
+    tipo.addEventListener("change", () => {
+      const outro = tipo.value === "Outros";
+      outroCampo.hidden = !outro;
+      outroTipo.required = outro;
+      if (!outro) outroTipo.value = "";
+    });
+
+    formulario.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+
+      if (!formulario.reportValidity()) return;
+
+      if (ENDPOINT.includes("SEU_ID_AQUI")) {
+        status.textContent =
+          "O recebimento dos cadastros ainda não foi configurado.";
+        return;
+      }
+
+      botao.disabled = true;
+      botao.textContent = "ENVIANDO CADASTRO...";
+      status.textContent = "";
+
+      try {
+        const resposta = await fetch(ENDPOINT, {
+          method: "POST",
+          body: new FormData(formulario),
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+
+        if (!resposta.ok) {
+          throw new Error("Falha no recebimento");
+        }
+
+        document.getElementById("area-formulario").style.display = "none";
+        document.getElementById("sucesso").style.display = "block";
+        document.getElementById("cadastro").scrollIntoView({
+          behavior: "smooth"
+        });
+
+      } catch (erro) {
+        status.textContent =
+          "Não foi possível concluir o cadastro. Tente novamente.";
+      } finally {
+        botao.disabled = false;
+        botao.textContent = "FINALIZAR CADASTRO";
+      }
+    });
+
+    function novoCadastro() {
+      formulario.reset();
+      outroCampo.hidden = true;
+      outroTipo.required = false;
+      status.textContent = "";
+
+      document.getElementById("sucesso").style.display = "none";
+      document.getElementById("area-formulario").style.display = "block";
+    }
+  </script>
 </body>
 </html>
