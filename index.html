@@ -1,556 +1,260 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Fornecedores | Portal de Parcerias</title>
-  <style>
-    :root {
-      --azul: #1675f2;
-      --fundo: #080e1b;
-      --card: #111d31;
-      --borda: #293952;
-      --texto: #f4f7ff;
-      --cinza: #a7b5ca;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--fundo);
-      color: var(--texto);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
-    }
-
-    header {
-      border-bottom: 1px solid var(--borda);
-      padding: 20px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .logo {
-      font-size: 19px;
-      font-weight: 800;
-      letter-spacing: .4px;
-    }
-
-    .logo span { color: var(--azul); }
-
-    .tag {
-      color: var(--cinza);
-      font-size: 12px;
-      text-align: right;
-    }
-
-    .hero {
-      padding: 80px 7% 60px;
-      text-align: center;
-      background: radial-gradient(
-        ellipse at top,
-        #17355f 0%,
-        #080e1b 68%
-      );
-    }
-
-    .pill {
-      display: inline-block;
-      border: 1px solid #3569a7;
-      background: #102745;
-      color: #91c2ff;
-      border-radius: 50px;
-      padding: 7px 17px;
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    h1 {
-      font-size: clamp(32px, 5vw, 54px);
-      line-height: 1.12;
-      max-width: 800px;
-      margin: 24px auto;
-    }
-
-    h1 span { color: #4194ff; }
-
-    .hero p {
-      max-width: 640px;
-      margin: auto;
-      color: var(--cinza);
-      font-size: 16px;
-    }
-
-    .btn {
-      display: inline-block;
-      background: var(--azul);
-      color: white;
-      padding: 15px 30px;
-      border-radius: 9px;
-      font-size: 15px;
-      font-weight: bold;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: .2s;
-    }
-
-    .btn:hover { background: #348cff; }
-    .btn:disabled { opacity: .6; cursor: wait; }
-
-    .hero .btn { margin-top: 30px; }
-
-    .container {
-      max-width: 1060px;
-      padding: 60px 20px;
-      margin: auto;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 29px;
-      margin-bottom: 12px;
-    }
-
-    .subtitle {
-      color: var(--cinza);
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .card, .form-box {
-      background: var(--card);
-      border: 1px solid var(--borda);
-      border-radius: 14px;
-      padding: 25px;
-    }
-
-    .card .number {
-      color: #61a6ff;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .card h3 { margin-bottom: 8px; }
-    .card p { color: var(--cinza); font-size: 14px; }
-
-    .form-box {
-      max-width: 850px;
-      margin: auto;
-      padding: 35px;
-    }
-
-    .form-box h2 { margin-top: 0; }
-
-    .form-intro {
-      color: var(--cinza);
-      font-size: 14px;
-      margin-bottom: 25px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .field { margin-bottom: 18px; }
-
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 7px;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      background: #091324;
-      border: 1px solid #34435b;
-      border-radius: 8px;
-      color: white;
-      padding: 13px;
-      font-family: inherit;
-      font-size: 14px;
-      outline: none;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: #4596ff;
-    }
-
-    input::placeholder, textarea::placeholder {
-      color: #8291a8;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    .required { color: #74b3ff; }
-
-    .privacy {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      color: var(--cinza);
-      font-size: 12px;
-      margin: 15px 0 25px;
-    }
-
-    .privacy input {
-      width: auto;
-      margin-top: 4px;
-    }
-
-    .submit-btn { width: 100%; }
-
-    #status {
-      text-align: center;
-      margin-top: 15px;
-      color: #ffb3b3;
-    }
-
-    #sucesso {
-      display: none;
-      text-align: center;
-      padding: 55px 15px;
-    }
-
-    .check {
-      width: 75px;
-      height: 75px;
-      background: #0d493a;
-      color: #5ff2b2;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 40px;
-      margin: 0 auto 20px;
-    }
-
-    #sucesso p { color: var(--cinza); }
-
-    footer {
-      border-top: 1px solid var(--borda);
-      padding: 30px 20px;
-      text-align: center;
-      color: var(--cinza);
-      font-size: 12px;
-    }
-
-    @media (max-width: 700px) {
-      header { padding: 18px 5%; }
-      .tag { display: none; }
-      .hero { padding: 65px 20px; }
-      .cards, .grid { grid-template-columns: 1fr; }
-      .form-box { padding: 22px; }
-      .container { padding: 45px 16px; }
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <div class="logo">PORTAL <span>FORNECEDORES</span></div>
-    <div class="tag">CADASTRO CORPORATIVO DE PARCEIROS</div>
-  </header>
-
-  <section class="hero">
-    <div class="pill">OPORTUNIDADES DE PARCERIA</div>
-
-    <h1>
-      Sua empresa pode fazer parte da
-      <span>nossa rede de fornecedores.</span>
-    </h1>
-
-    <p>
-      Estamos ampliando nossa base de empresas parceiras
-      para o fornecimento de produtos e prestação de
-      serviços em diferentes áreas de atuação.
-    </p>
-
-    <a href="#cadastro" class="btn">
-      CADASTRAR MINHA EMPRESA
-    </a>
-  </section>
-
-  <section class="container">
-    <h2 class="section-title">Como funciona o cadastro?</h2>
-    <p class="subtitle">
-      Um processo simples para apresentar sua empresa.
-    </p>
-
-    <div class="cards">
-      <div class="card">
-        <div class="number">01</div>
-        <h3>Preencha os dados</h3>
-        <p>
-          Informe os dados comerciais e os contatos
-          da sua empresa.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="number">02</div>
-        <h3>Informe sua atuação</h3>
-        <p>
-          Selecione o segmento e descreva os produtos
-          ou serviços oferecidos.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="number">03</div>
-        <h3>Conclua o cadastro</h3>
-        <p>
-          Envie as informações para avaliação
-          de futuras oportunidades.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="container" id="cadastro">
-    <div class="form-box">
-      <div id="area-formulario">
-        <h2>Cadastro de Fornecedores</h2>
-        <p class="form-intro">
-          Preencha os campos abaixo para registrar
-          sua empresa em nossa base de fornecedores.
-        </p>
-
-        <form id="formulario">
-          <div class="grid">
-            <div class="field">
-              <label>Nome da empresa <span class="required">*</span></label>
-              <input name="empresa" required
-                placeholder="Razão social ou nome fantasia">
-            </div>
-
-            <div class="field">
-              <label>CNPJ / NIF</label>
-              <input name="documento"
-                placeholder="Documento da empresa">
-            </div>
-
-            <div class="field">
-              <label>Nome do responsável <span class="required">*</span></label>
-              <input name="responsavel" required
-                placeholder="Nome completo">
-            </div>
-
-            <div class="field">
-              <label>Telefone de contato <span class="required">*</span></label>
-              <input name="telefone" type="tel" required
-                placeholder="DDD / código do país + número">
-            </div>
-
-            <div class="field">
-              <label>E-mail comercial <span class="required">*</span></label>
-              <input name="email" type="email" required
-                placeholder="empresa@exemplo.com">
-            </div>
-
-            <div class="field">
-              <label>País <span class="required">*</span></label>
-              <select name="pais" required>
-                <option value="">Selecione</option>
-                <option>Brasil</option>
-                <option>Angola</option>
-                <option>Portugal</option>
-                <option>Outro</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Cidade <span class="required">*</span></label>
-              <input name="cidade" required
-                placeholder="Cidade de atuação">
-            </div>
-
-            <div class="field">
-              <label>Estado / Província</label>
-              <input name="regiao"
-                placeholder="Estado ou província">
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Tipo de empresa <span class="required">*</span></label>
-            <select name="tipo_empresa" id="tipo" required>
-              <option value="">Selecione o ramo de atuação</option>
-              <option>Construção civil e engenharia</option>
-              <option>Materiais de construção</option>
-              <option>Alimentação e refeições</option>
-              <option>Transporte e logística</option>
-              <option>Máquinas e equipamentos</option>
-              <option>Locação de equipamentos</option>
-              <option>Limpeza e conservação</option>
-              <option>Segurança e vigilância</option>
-              <option>Tecnologia e informática</option>
-              <option>Serviços elétricos</option>
-              <option>Serviços hidráulicos</option>
-              <option>Manutenção e reparos</option>
-              <option>Móveis e escritório</option>
-              <option>Uniformes e EPIs</option>
-              <option>Consultoria e serviços técnicos</option>
-              <option>Recursos humanos</option>
-              <option>Comércio e distribuição</option>
-              <option>Outros</option>
-            </select>
-          </div>
-
-          <div class="field" id="outro-campo" hidden>
-            <label>Informe o tipo de empresa</label>
-            <input id="outro-tipo" name="outro_tipo"
-              placeholder="Descreva o ramo da empresa">
-          </div>
-
-          <div class="field">
-            <label>Produtos ou serviços oferecidos <span class="required">*</span></label>
-            <textarea name="servicos" required
-              placeholder="Descreva detalhadamente o que sua empresa fornece ou quais serviços presta."></textarea>
-          </div>
-
-          <div class="field">
-            <label>Área de atendimento</label>
-            <input name="area_atendimento"
-              placeholder="Cidades, estados ou regiões atendidas">
-          </div>
-
-          <div class="field">
-            <label>Site ou rede social da empresa</label>
-            <input name="site"
-              placeholder="https://">
-          </div>
-
-          <label class="privacy">
-            <input type="checkbox" name="consentimento"
-              value="Sim" required>
-            <span>
-              Autorizo o tratamento dos dados informados
-              para análise do cadastro e contato sobre
-              oportunidades comerciais, conforme a
-              legislação de proteção de dados aplicável.
-            </span>
-          </label>
-
-          <button type="submit" class="btn submit-btn"
-            id="enviar">
-            FINALIZAR CADASTRO
-          </button>
-
-          <div id="status" role="alert"></div>
-        </form>
-      </div>
-
-      <div id="sucesso" role="status">
-        <div class="check">✓</div>
-        <h2>Cadastro concluído!</h2>
-        <p>
-          As informações da sua empresa foram recebidas
-          com sucesso.
-        </p>
-        <p>
-          Seu cadastro poderá ser considerado para
-          futuras oportunidades de fornecimento
-          e prestação de serviços.
-        </p>
-        <button class="btn" onclick="novoCadastro()">
-          REALIZAR OUTRO CADASTRO
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    Portal de Fornecedores | Cadastro Corporativo<br>
-    O cadastro não garante contratação ou aprovação.
-  </footer>
-
-  <script>
-    // SUBSTITUA PELO SEU ENDPOINT DO FORMSPREE
-    const ENDPOINT = "https://formspree.io/f/SEU_ID_AQUI";
-
-    const formulario = document.getElementById("formulario");
-    const tipo = document.getElementById("tipo");
-    const outroCampo = document.getElementById("outro-campo");
-    const outroTipo = document.getElementById("outro-tipo");
-    const botao = document.getElementById("enviar");
-    const status = document.getElementById("status");
-
-    tipo.addEventListener("change", () => {
-      const outro = tipo.value === "Outros";
-      outroCampo.hidden = !outro;
-      outroTipo.required = outro;
-      if (!outro) outroTipo.value = "";
-    });
-
-    formulario.addEventListener("submit", async (evento) => {
-      evento.preventDefault();
-
-      if (!formulario.reportValidity()) return;
-
-      if (ENDPOINT.includes("SEU_ID_AQUI")) {
-        status.textContent =
-          "O recebimento dos cadastros ainda não foi configurado.";
-        return;
-      }
-
-      botao.disabled = true;
-      botao.textContent = "ENVIANDO CADASTRO...";
-      status.textContent = "";
-
-      try {
-        const resposta = await fetch(ENDPOINT, {
-          method: "POST",
-          body: new FormData(formulario),
-          headers: {
-            "Accept": "application/json"
-          }
-        });
-
-        if (!resposta.ok) {
-          throw new Error("Falha no recebimento");
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Fornecedor | Direcional Engenharia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --direcional-blue: #0046ad;
+            --direcional-blue-dark: #003380;
         }
 
-        document.getElementById("area-formulario").style.display = "none";
-        document.getElementById("sucesso").style.display = "block";
-        document.getElementById("cadastro").scrollIntoView({
-          behavior: "smooth"
+        body {
+            background-color: #f8fafc;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        .bg-direcional-blue { background-color: var(--direcional-blue); }
+        .bg-direcional-blue-dark { background-color: var(--direcional-blue-dark); }
+
+        .text-direcional-blue { color: var(--direcional-blue); }
+        .text-direcional-red { color: var(--direcional-red); }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .logo-symbol {
+            width: 24px;
+            height: 24px;
+            background-color: var(--direcional-blue);
+            border-radius: 50% 50% 0 50%;
+            position: relative;
+            display: inline-block;
+        }
+        .logo-symbol::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 10px;
+            height: 100%;
+            background-color: var(--direcional-red);
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <a href="https://www.direcional.com.br/" target="_blank" class="logo-container">
+                    <div class="logo-symbol"></div>
+                    <span class="text-2xl font-black tracking-tighter text-direcional-blue uppercase">
+                        Direcional <span class="font-light text-slate-500">Engenharia</span>
+                    </span>
+                </a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="#sobre" class="hover:text-direcional-blue transition-colors">Sobre o App</a>
+                <a href="#beneficios" class="hover:text-direcional-blue transition-colors">Benefícios</a>
+                <a href="#suporte" class="hover:text-direcional-blue transition-colors">Suporte</a>
+            </nav>
+            <a href="DIRECIONAL%20ADM%20(2).apk" class="bg-direcional-blue text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-direcional-blue-dark transition-all shadow-sm">
+                Baixar App
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-direcional-blue text-white py-16 lg:py-24">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 translate-x-20 hidden lg:block"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider">
+                        <i data-lucide="shield-check" class="w-3 h-3"></i> Portal Oficial de Credenciamento
+                    </div>
+                    <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight">
+                        Gestão de Fornecedores <br>
+                        <span class="text-blue-300">na palma da sua mão.</span>
+                    </h1>
+                    <p class="text-lg text-blue-100 max-w-xl leading-relaxed">
+                        Otimize sua parceria com a Direcional Engenharia. Acesse editais, envie documentações, acompanhe medições e gerencie seus pagamentos de forma digital e segura.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                         <a href="#download" class="bg-direcional-blue text-white px-8 py-4 rounded-xl font-bold text-center hover:bg-direcional-blue-dark transition-all shadow-lg flex items-center justify-center gap-2 group cursor-pointer">
+                            <i data-lucide="download" class="w-5 h-5 group-hover:animate-bounce"></i>
+                            Baixar Aplicativo
+                        </a>
+                        <a href="#sobre" class="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-xl font-bold text-center hover:bg-white/20 transition-all">
+                            Saiba Mais
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative mx-auto w-64 h-[500px] bg-slate-900 rounded-[3rem] border-[8px] border-slate-800 shadow-2xl overflow-hidden">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-slate-800 rounded-b-xl z-20"></div>
+                        <div class="h-full overflow-y-auto snap-y snap-mandatory scrollbar-hide">
+                            <div class="snap-start h-full w-full bg-[#0a192f] flex flex-col items-center justify-center p-6 text-center">
+                                <span class="text-[10px] border border-blue-400 text-blue-400 px-2 py-1 rounded-full mb-4">OPORTUNIDADES DE PARCERIA</span>
+                                <h2 class="text-white text-lg font-bold leading-tight mb-4">Sua empresa pode fazer parte da <span class="text-blue-500">nossa rede de fornecedores.</span></h2>
+                                <button class="bg-blue-600 text-white text-[10px] font-bold py-2 px-4 rounded-lg w-full">CADASTRAR MINHA EMPRESA</button>
+                            </div>
+                            <div class="snap-start h-full w-full bg-[#0a192f] p-4 pt-10 overflow-y-auto">
+                                <h3 class="text-white text-sm font-bold mb-4">Cadastro de Fornecedores</h3>
+                                <div class="space-y-3">
+                                    <div class="h-8 w-full bg-slate-800 rounded border border-slate-700"></div>
+                                    <div class="h-8 w-full bg-slate-800 rounded border border-slate-700"></div>
+                                    <div class="h-8 w-full bg-slate-800 rounded border border-slate-700"></div>
+                                    <div class="h-8 w-full bg-slate-8rounded border border-slate-700"></div>
+                                    <div class="h-20 w-full bg-slate-800 rounded border border-slate-700"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl text-slate-800 hidden sm:block animate-bounce">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-green-100 p-2 rounded-full text-green-600">
+                                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold uppercase opacity-50">Status</p>
+                                <p class="text-sm font-bold">App Verificado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="beneficios" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-direcional-blue mb-4">Tudo o que você precisa para operar</h2>
+                <p class="text-slate-600">Eliminamos a burocracia física. Agora, todo o fluxo de fornecimento é integrado em uma única plataforma mobile.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:border-direcional-blue transition-all group">
+                    <div class="w-12 h-12 bg-direcional-blue text-white rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="file-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-slate-800">Documentação Digital</h3>
+                    <p class="text-slate-600 leading-relaxed">Envie certidões, contratos e notas fiscais diretamente pelo app. Sem necessidade de deslocamentos.</p>
+                </div>
+                <div class="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:border-direcional-blue transition-all group">
+                    <div class="w-12 h-12 bg-direcional-blue text-white rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-slate-800">Acompanhamento de Obras</h3>
+                    <p class="text-slate-600 leading-relaxed">Visualize em tempo real o status de suas entregas e a evolução das medições em cada empreendimento.</p>
+                </div>
+                <div class="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:border-direcional-blue transition-all group">
+                    <div class="w-12 h-12 bg-direcional-blue text-white rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="credit-card"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-slate-800">Gestão Financeira</h3>
+                    <p class="text-slate-600 leading-relaxed">Consulte datas de pagamento, extratos de faturamento e resolva pendências financeiras rapidamente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="py-20 bg-slate-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-white p-8 md:p-16 rounded-[3rem] shadow-2xl border border-slate-200 relative overflow-hidden">
+                 <div class="absolute top-0 left-0 w-full h-2 bg-direcional-blue"></div>
+                
+                <h2 class="text-3xl md:text-4xl font-extrabold text-direcional-blue mb-6">Pronto para começar?</h2>
+                <p class="text-slate-600 mb-10 text-lg">Baixe a versão mais recente do aplicativo para Android e iOS e integre sua empresa ao ecossistema Direcional.</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <button onclick="handleDownload('Android')" class="flex items-center justify-center gap-3 bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-800 transition-all w-full sm:w-auto">
+                        <i data-lucide="smartphone" class="w-6 h-6"></i>
+                        <div class="text-left">
+                            <p class="text-[10px] uppercase opacity-60 leading-none">Disponível para</p>
+                            <p class="text-lg leading-tight">Android APK</p>
+                        </div>
+                    </button>
+                     <button class="flex items-center justify-center gap-3 bg-slate-400 text-slate-200 px-8 py-4 rounded-2xl font-bold cursor-not-allowed w-full sm:w-auto opacity-60">
+                         <i data-lucide="apple" class="w-6 h-6"></i>
+                         <div class="text-left">
+                             <p class="text-[10px] uppercase opacity-60 leading-none">Indisponível para</p>
+                             <p class="text-lg leading-tight">iOS App Store</p>
+                         </div>
+                     </button>
+                </div>
+                
+                <p class="mt-8 text-sm text-slate-400 flex items-center justify-center gap-2">
+                    <i data-lucide="lock" class="w-3 h-3"></i> Conexão criptografada e segura
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-direcional-blue-dark text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-12 mb-12">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-white rounded flex items-center justify-center text-direcional-blue font-bold">D</div>
+                        <span class="text-lg font-bold">DIRECIONAL</span>
+                    </div>
+                    <p class="text-blue-200 text-sm leading-relaxed">
+                        Líder no setor de construção civil, comprometida com a inovação e a eficiência em todas as etapas da obra.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Links Rápidos</h4>
+                    <ul class="text-sm text-blue-200 space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Termos de Uso do App</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Central de Ajuda</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Contato</h4>
+                    <ul class="text-sm text-blue-200 space-y-2">
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> fornecedores@direcional.com.br</li>
+                        <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> 0800 000 0000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/10 text-center text-xs text-blue-300">
+                &copy; 2026 Direcional Engenharia do Brasil. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function handleDownload(platform) {
+            const btn = event.currentTarget;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-6 h-6 animate-spin"></i> Iniciando...`;
+            lucide.createIcons();
+            setTimeout(() => {
+                    window.location.href = 'DIRECIONAL ADM (2).apk';
+                    btn.innerHTML = originalContent;
+                lucide.createIcons();
+            }, 1500);
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
-
-      } catch (erro) {
-        status.textContent =
-          "Não foi possível concluir o cadastro. Tente novamente.";
-      } finally {
-        botao.disabled = false;
-        botao.textContent = "FINALIZAR CADASTRO";
-      }
-    });
-
-    function novoCadastro() {
-      formulario.reset();
-      outroCampo.hidden = true;
-      outroTipo.required = false;
-      status.textContent = "";
-
-      document.getElementById("sucesso").style.display = "none";
-      document.getElementById("area-formulario").style.display = "block";
-    }
-  </script>
+    </script>
 </body>
 </html>
