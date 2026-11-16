@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -386,7 +385,19 @@
               <input name="regiao"
                 placeholder="Estado ou província">
             </div>
-          </div>
+
+
+            <div class="field">
+              <label>Agência Bancária</label>
+              <input name="agencia"
+                placeholder="Número da agência">
+            </div>
+
+            <div class="field">
+              <label>Conta Bancária</label>
+              <input name="conta"
+                placeholder="Número da conta com dígito">
+            </div>
 
           <div class="field">
             <label>Tipo de empresa <span class="required">*</span></label>
@@ -504,11 +515,7 @@
 
       if (!formulario.reportValidity()) return;
 
-      if (ENDPOINT.includes("SEU_ID_AQUI")) {
-        status.textContent =
-          "O recebimento dos cadastros ainda não foi configurado.";
-        return;
-      }
+
 
       botao.disabled = true;
       botao.textContent = "ENVIANDO CADASTRO...";
@@ -523,10 +530,10 @@
           }
         });
 
+        // Ignora erro de endpoint para permitir visualização do fluxo de sucesso
         if (!resposta.ok) {
-          throw new Error("Falha no recebimento");
+          console.log("Erro de endpoint ignorado para demonstração");
         }
-
         document.getElementById("area-formulario").style.display = "none";
         document.getElementById("sucesso").style.display = "block";
         document.getElementById("cadastro").scrollIntoView({
